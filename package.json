@@ -1,0 +1,27 @@
+{
+  "name": "dashboard",
+  "version": "0.0.0",
+  "description": "Media Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/NickMele/dashboard.git"
+  },
+  "author": "Nick Mele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NickMele/dashboard/issues"
+  },
+  "homepage": "https://github.com/NickMele/dashboard",
+  "dependencies": {
+    "express": "^4.4.3",
+    "hbs": "^2.7.0",
+    "request": "^2.36.0",
+    "nconf": "^0.6.9",
+    "lodash": "^2.4.1",
+    "async": "^0.9.0"
+  }
+}
