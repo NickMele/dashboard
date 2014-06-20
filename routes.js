@@ -5,5 +5,6 @@ module.exports = function(app) {
   
   // setup routes
   app.get('/', dashboard.index);
+  app.get('/queue', dashboard.queue);
   
 };

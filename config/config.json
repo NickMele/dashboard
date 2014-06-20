@@ -2,5 +2,9 @@
   "sickbeard": {
     "url": "http://media.myhome.com/sickbeard/api/",
     "key": "9267b8c0262070f8d7615def2e1dad59"
+  },
+  "sabnzbd": {
+    "url": "http://media.myhome.com/sabnzbd/api/",
+    "key": "19c73911ccfd25dae4a275b1c7950bf8"
   }
 }

@@ -1,0 +1,12 @@
+{{#each shows}}
+  <section>
+    <h1>{{show_name}}</h1>
+    <h3>Season {{latest_season.season}}</h3>
+    <div>{{latest_episode.name}} ({{latest_episode.status}})</div>
+    <ul>
+      {{#each latest_season.episodes}}
+        <li>{{name}} ({{status}})</li>
+      {{/each}}
+    </ul>
+  </section>
+{{/each}}

@@ -7,6 +7,10 @@ nconf.file('config/config.json');
 
 // set view engines
 app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
+
+// set up static directories
+app.use('/dist', express.static(__dirname + '/dist'));
 
 app.enable('trust proxy');
 
