@@ -7,4 +7,6 @@ module.exports = function(app) {
   app.get('/', dashboard.index);
   app.get('/queue', dashboard.queue);
   
+  app.get('/show/:tvdbid/banner', dashboard.banner);
+  app.get('/show/:tvdbid/poster', dashboard.poster);
 };

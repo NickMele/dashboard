@@ -1,6 +1,11 @@
 var express = require('express')
-  , app = express()
-  , nconf = require('nconf');
+var app = express();
+var nconf = require('nconf');
+var hbs = require('hbs');
+
+hbs.registerHelper('lowercase', function(string) {
+  return string && string.toLowerCase();
+});
   
 // load config
 nconf.file('config/config.json');

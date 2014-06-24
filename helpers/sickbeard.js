@@ -20,7 +20,7 @@ exports.get = function(command, params, callback) {
   // add the command as a param
   params.cmd = command;
   // create request
-  request({
+  return request({
     url: url,
     qs: params,
     json: true

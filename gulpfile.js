@@ -2,6 +2,7 @@
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
 var stylus = require('gulp-stylus');
+var nib = require('nib');
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
@@ -21,7 +22,7 @@ gulp.task('bower', function() {
 
 gulp.task('styles', function() {
   return gulp.src('assets/styles/main.styl')
-    .pipe(stylus())
+    .pipe(stylus({use: [nib()]}))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(gulp.dest('dist/assets/css'))
     .pipe(rename({suffix: '.min'}))
@@ -31,11 +32,11 @@ gulp.task('styles', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('assets/js/**/*.js')
+  return gulp.src(['assets/js/lib/*.js','assets/js/*.js'])
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/assets/js'))
     .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('dist/assets/js'))
     .pipe(notify({ message: 'Scripts task complete' }));
 });
