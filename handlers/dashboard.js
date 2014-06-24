@@ -1,12 +1,23 @@
 var sickbeard = require('../helpers/sickbeard')
-  , sab = require('../helpers/sab')
-  , _ = require('lodash')
-  , async = require('async');
+var sab = require('../helpers/sab');
+var _ = require('lodash');
+var async = require('async');
 
 module.exports = function(app) {
+  var useTempData = true;
+  
   return {
     index: function(req, res, next) {
       var data = {};
+      if (useTempData) {
+        require('fs').readFile('./temp/dashboard.json', function(error, data) {
+          data = JSON.parse(data);
+          if (req.xhr) {
+            return res.send(data);
+          }
+          return res.render('dashboard', data);
+        });
+      }
       sickbeard.get('shows', { sort: 'name', paused: 0 }, function(error, response, json) {
         data.shows = _.where(json.data, { 'status': 'Continuing' });
         async.each(data.shows, function(show, callback) {
@@ -31,6 +42,9 @@ module.exports = function(app) {
             });
           });
         }, function(error) {
+          // save test object to file
+          var saveData = JSON.stringify(data);
+          require('fs').writeFile('./temp/dashboard.json', saveData);
           if (req.xhr) {
             return res.send(data);
           }
