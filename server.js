@@ -1,8 +1,10 @@
 var express = require('express')
+var namespace = require('express-namespace');
 var app = express();
 var nconf = require('nconf');
 var hbs = require('hbs');
 
+// handlebars helpers
 hbs.registerHelper('lowercase', function(string) {
   return string && string.toLowerCase();
 });
@@ -16,6 +18,7 @@ app.set('views', __dirname + '/views');
 
 // set up static directories
 app.use('/dist', express.static(__dirname + '/dist'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 app.enable('trust proxy');
 

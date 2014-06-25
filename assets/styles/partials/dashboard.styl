@@ -6,17 +6,23 @@
     background: white;
     box-shadow: 0 0 1rem 0 $base-shadow-color;
     font-weight: 300;
-    &:target {
-      box-shadow: 0 0 1rem 0 $green;
+    &.open {
+      .show-info {
+        max-height: 25rem;
+      }
     }
     .show-banner {
       position: relative;
       img {
         width: 100%;
+        display: block;
       }
     }
     .show-info {
       position: relative;
+      max-height: 0;
+	    overflow: hidden;
+      transition: all 200ms $timing-function;
       .season-number {
         padding: 1rem;
         font-size: 2.5rem;
@@ -61,25 +67,40 @@
             text-transform: uppercase;
             font-size: 1rem;
             cursor: pointer;
-            &.skipped {
+          }
+          &[data-status="skipped"] {
+            .status {
               border-color: #bedeed;
               background: rgba(195, 227, 240, 0.7);
               color: #005678;
             }
-            &.downloaded {
+          }
+          &[data-status="downloaded"] {
+            .status {
               border-color: #c3e3c8;
               background: rgba(201, 231, 204, 0.7);
               color: #047511;
             }
-            &.wanted {
+          }
+          &[data-status="wanted"] {
+            .status {
               border-color: #ffb0b0;
               background: rgba(255, 176, 176, 0.7);
               color: #850e0e;
             }
-            &.unaired {
+          }
+          &[data-status="unaired"] {
+            .status {
               border-color: #f5f1e4;
               background: rgba(245, 241, 228, 0.7);
               color: #836111;
+            }
+          }
+          &[data-status="snatched"] {
+            .status {
+              border-color: #ebc1ea;
+              background: rgba(235, 193, 234, 0.7);
+              color: #920f96;
             }
           }
           &:first-of-type {
@@ -124,7 +145,6 @@
   background: $jumpto-background;
   box-shadow: 0 0 1rem 0 $base-shadow-color;
   width: 20%;
-  -webkit-backface-visibility: hidden;
   h3 {
     padding: 1rem;
     border-bottom: 1px solid $base-border-color;

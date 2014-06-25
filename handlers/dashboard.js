@@ -17,6 +17,7 @@ module.exports = function(app) {
           }
           return res.render('dashboard', data);
         });
+        return false;
       }
       sickbeard.get('shows', { sort: 'name', paused: 0 }, function(error, response, json) {
         data.shows = _.where(json.data, { 'status': 'Continuing' });
@@ -55,16 +56,22 @@ module.exports = function(app) {
     
     banner: function(req, res, next) {
       // get our request object for the banner
-      var banner = sickbeard.get('show.getbanner', { tvdbid: req.params.tvdbid});
+      var banner = sickbeard.get('show.getbanner', { tvdbid: req.query.tvdbid});
       // stream the request to the response
       req.pipe(banner).pipe(res);
     },
     
     poster: function(req, res, next) {
       // get our request object for the poster
-      var poster = sickbeard.get('show.getposter', { tvdbid: req.params.tvdbid});
+      var poster = sickbeard.get('show.getposter', { tvdbid: req.query.tvdbid});
       // stream the request to the response
       req.pipe(poster).pipe(res);
+    },
+    
+    episode: {
+      search: function(req, res, next) {
+        return res.send(500, {});
+      }
     },
     
     queue: function(req, res, next) {

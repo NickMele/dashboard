@@ -14,11 +14,6 @@ var notify = require('gulp-notify');
 var cache = require('gulp-cache');
 var flatten = require('gulp-flatten');
 
-gulp.task('bower', function() {
-  return gulp.src('bower_components/**/*.min.js')
-    .pipe(flatten())
-    .pipe(gulp.dest('dist/assets/js/lib'));
-});
 
 gulp.task('styles', function() {
   return gulp.src('assets/styles/main.styl')
@@ -72,5 +67,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('styles', 'scripts', 'bower', 'images', 'server', 'watch');
+    gulp.start('styles', 'scripts', 'images', 'server', 'watch');
 });

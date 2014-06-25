@@ -1,17 +1,8 @@
-<div class="jumpto">
-  <h3>Jump to</h3>
-  <ul>
-    {{#each shows}}
-      <li><a href="#{{tvdbid}}">{{show_name}}</a></li>
-    {{/each}}
-  </ul>
-</div>
-
 <section class="shows">
   {{#each shows}}
     <div class="show" id="{{tvdbid}}" data-tvdbid="{{tvdbid}}">
       <div class="show-banner">
-        <img src="/show/{{tvdbid}}/banner" alt="" />
+        <img src="/api/show/banner?tvdbid={{tvdbid}}" alt="" />
       </div>
       <div class="show-info">
         <h3 class="season-number">Season {{latest_season.season}}</h3>
@@ -20,8 +11,8 @@
             <div class="flex">
               <span class="airdate">{{latest_episode.airdate}}</span>
               <span class="title">{{latest_episode.name}}</span>
-              <span class="status {{lowercase latest_episode.status}}">{{latest_episode.status}}</span>
-              <span class="search">SEARCH</span>
+              <span class="status">{{latest_episode.status}}</span>
+              <span class="search"><i class="fa fa-search"></i></span>
             </div>
             <div class="sab-info">
               <div class="flex">
@@ -37,8 +28,8 @@
               <div class="flex">
                 <span class="airdate">{{airdate}}</span>
                 <span class="title">{{name}}</span>
-                <span class="status {{lowercase status}}">{{status}}</span>
-                <span class="search">SEARCH</span>
+                <span class="status">{{status}}</span>
+                <span class="search"><i class="fa fa-search"></i></span>
               </div>
             </li>
           {{/each}}

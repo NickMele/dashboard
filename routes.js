@@ -7,6 +7,9 @@ module.exports = function(app) {
   app.get('/', dashboard.index);
   app.get('/queue', dashboard.queue);
   
-  app.get('/show/:tvdbid/banner', dashboard.banner);
-  app.get('/show/:tvdbid/poster', dashboard.poster);
+  app.namespace('/api', function() {
+    app.get('/show/banner', dashboard.banner);
+    app.get('/show/poster', dashboard.poster);
+    app.get('/show/episode.search', dashboard.episode.search);
+  });
 };

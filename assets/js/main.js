@@ -14,7 +14,13 @@
   dashboard.functions = {};
   
   // object of various properties accessed across different methods
-  dashboard.properties = {};
+  dashboard.properties = {
+    urls: {
+      episode: {
+        search: '/api/show/episode.search'
+      }
+    }
+  };
   
   // shortcut to modules
   window.dash = dashboard.modules;
@@ -24,6 +30,8 @@
   dashboard.modules.show = function(selector) {
 
     var Show = function(el) {
+      
+      var obj = this;
 
       // cache element
       this.$element = $(el);
@@ -34,26 +42,26 @@
       this.tvdbid = this.$element.data('tvdbid');
       
       this.listeners = function() {
-        var self = this;
-        
+        obj.$element.find('.show-banner').on('click', function() {
+          obj.$element.toggleClass('open');
+        });
       };
 
       // initialization controller
       this.init = function(index) {
-        var self = this;
-
-        // return if already instantiated
-        if ( self.$element.data('instantiated') ) { return; }
         
-        self.listeners();
+        // return if already instantiated
+        if ( obj.$element.data('instantiated') ) { return; }
+        
+        obj.listeners();
 
         // store data
-        self.$element.data({
+        obj.$element.data({
             instantiated: true,
             instance: index
         });
 
-        self.$element.trigger('ready');
+        obj.$element.trigger('ready');
       };
 
     };
@@ -88,41 +96,92 @@
   -------------------------------------------------------------------------- */
   dashboard.modules.episode_list = function(selector) {
     
-    var Episode = function(el, data) {
+    var Episode = function(el) {
+      
+      var obj = this;
       
       // cache element
       this.$element = $(el);
       
-      this.data = $.extend({}, data);
-      
-      this.listeners = function() {
-        var self = this;
-        
-        self.$element.find('.search').on('click', function() {
-          console.log(self.data, $(this).closest('li').data('episode'));
-        })
+      // cache elements
+      this.elements = {
+        $search: this.$element.find('.search'),
+        $status: this.$element.find('.status')
       }
       
-      this.init = function(index) {
-        var self = this;
+      this.cache = {
+        original_status: this.$element.data('status')
+      }
+      
+      // data object
+      this.data = {
+        tvdbid: null,
+        season: null,
+        episode: this.$element.data('episode')
+      };
+      
+      this.setStatus = function(status) {
+        // set episode status
+        obj.$element.attr('data-status', status);
+        // set status text
+        obj.elements.$status.text(status);
+      };
+      
+      this.searchCompleted = function() {
+        // set status
+        obj.setStatus('snatched');
+      };
+      
+      this.searchFailed = function() {
+        // set status
+        obj.setStatus(obj.cache.original_status);
+      };
+      
+      // initiates a sickbeard search for this episode
+      this.search = function() {
+        // set status to searching
+        obj.setStatus('searching');
+        // initiate api request
+        $.ajax({
+          url: dashboard.properties.urls.episode.search,
+          data: obj.data
+        }).then(
+          obj.searchCompleted,
+          obj.searchFailed
+        );
+      };
+      
+      this.listeners = function() {
+        // initiate search when search icon is clicked
+        obj.elements.$search.on('click', function() {
+          obj.search();
+        });
+      };
+      
+      this.init = function(index, data) {
         
         // return if already instantiated
-        if ( self.$element.data('instantiated') ) { return; }
+        if ( obj.$element.data('instantiated') ) { return; }
         
-        self.listeners();
+        // merge data
+        obj.data = $.extend({}, obj.data, data);
+        
+        obj.listeners();
         
         // store data
-        self.$element.data({
-            instantiated: true,
-            instance: index
+        obj.$element.data({
+          instantiated: true,
+          instance: index
         });
 
-        self.$element.trigger('ready');
+        obj.$element.trigger('ready');
       };
       
     };
 
     var EpisodeList = function(el) {
+      
+      var obj = this;
 
       // cache element
       this.$element = $(el);
@@ -139,28 +198,27 @@
       
       // initialization controller
       this.init = function(index) {
-        var self = this;
-
+        
         // return if already instantiated
-        if ( self.$element.data('instantiated') ) { return; }
+        if ( obj.$element.data('instantiated') ) { return; }
         
         // instantiate each episode
-        self.$element.find('li').each(function(i, el){
+        obj.$element.find('li').each(function(i, el){
 
-          var newEpisode = new Episode(el, self.data);
-          newEpisode.init(i);
+          var newEpisode = new Episode(el);
+          newEpisode.init(i, obj.data);
 
-          self.episodes.push(newEpisode);
+          obj.episodes.push(newEpisode);
 
         });
 
         // store data
-        self.$element.data({
+        obj.$element.data({
             instantiated: true,
             instance: index
         });
 
-        self.$element.trigger('ready');
+        obj.$element.trigger('ready');
       };
 
     };
