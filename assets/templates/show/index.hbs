@@ -1,0 +1,20 @@
+{{show.show_name}}
+
+<ul>
+  {{#each season in model.seasons itemController="season"}}
+    <li {{bind-attr class="season.open"}}>
+      <a href="#" {{action 'toggle'}}>{{season.title}}</a>
+      <ul>
+        {{#each episode in season.episodes itemController="episode"}}
+          <li>
+            {{episode.name}} ({{episode.status}})
+            <a href="#" {{action 'download'}}>Download</a>
+            {{#each episode.download_status}}
+              <div>Downloading: {{percentage}}%</div>
+            {{/each}}
+          </li>
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+</ul>

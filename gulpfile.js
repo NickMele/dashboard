@@ -13,10 +13,28 @@ var concat = require('gulp-concat');
 var notify = require('gulp-notify');
 var cache = require('gulp-cache');
 var flatten = require('gulp-flatten');
+var handlebars = require('gulp-ember-handlebars');
 
+var paths = {
+  vendors: [
+   'bower_components/jquery/dist/jquery.min.js',
+   'bower_components/handlebars/handlebars.min.js',
+   'bower_components/ember/ember.js',
+   'bower_components/lodash/dist/lodash.min.js'
+  ],
+  styles: ['assets/styles/main.styl'],
+  scripts: ['assets/js/lib/*.js','assets/js/*.js'],
+  images: ['assets/images/**/*']
+};
+
+gulp.task('vendors', function() {
+  return gulp.src(paths.vendors)
+    .pipe(concat('vendors.min.js'))
+    .pipe(gulp.dest('dist/assets/js'));
+});
 
 gulp.task('styles', function() {
-  return gulp.src('assets/styles/main.styl')
+  return gulp.src(paths.styles)
     .pipe(stylus({use: [nib()]}))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(gulp.dest('dist/assets/css'))
@@ -27,7 +45,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(['assets/js/lib/*.js','assets/js/*.js'])
+  return gulp.src(paths.scripts)
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/assets/js'))
     .pipe(rename({suffix: '.min'}))
@@ -37,10 +55,19 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('images', function() {
-  return gulp.src('assets/images/**/*')
+  return gulp.src(paths.images)
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
     .pipe(gulp.dest('dist/assets/img'))
     .pipe(notify({ message: 'Images task complete' }));
+});
+
+gulp.task('templates', function() {
+  gulp.src(['assets/templates/*/**.hbs'])
+    .pipe(handlebars({
+      outputType: 'browser'
+     }))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest('dist/assets/js'));
 });
 
 gulp.task('clean', function() {
@@ -49,12 +76,12 @@ gulp.task('clean', function() {
 });
 
 gulp.task('server', function () {
-  return nodemon({ script: 'server.js', ext: 'hbs js', ignore: ['assets/**/*','ignored.js'] })
+  return nodemon({ script: 'server.js', ext: 'hbs js', ignore: ['assets/**/*','ignored.js'] });
 });
 
 // Watch
 gulp.task('watch', function() {
-  
+
   // Watch .scss files
   gulp.watch('assets/styles/**/*.styl', ['styles']);
 
@@ -64,8 +91,10 @@ gulp.task('watch', function() {
   // Watch image files
   gulp.watch('assets/images/**/*', ['images']);
 
+  // Watch template files
+  gulp.watch('assets/templates/**/*', ['templates']);
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('styles', 'scripts', 'images', 'server', 'watch');
+    gulp.start('vendors', 'styles', 'scripts', 'templates', 'images', 'server', 'watch');
 });

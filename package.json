@@ -37,7 +37,9 @@
     "gulp-imagemin": "^0.6.1",
     "gulp-flatten": "0.0.2",
     "nib": "^1.0.3",
-    "express-namespace": "^0.1.1"
+    "express-namespace": "^0.1.1",
+    "morgan": "^1.1.1",
+    "gulp-ember-handlebars": "^0.6.0"
   },
   "devDependencies": {
     "gulp": "^3.8.1",
