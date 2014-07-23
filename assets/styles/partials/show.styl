@@ -1,0 +1,79 @@
+.show-details {
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+  .show-poster {
+    width: 150px;
+    img {
+      max-width: 100%;
+    }
+  }
+  .show-info {
+    flex: 1;
+    padding: 1rem;
+  }
+  .show-name {
+    font-size: 2.5rem;
+    font-weight: 200;
+  }
+  .show-airtime {
+    color: darken($white-cream, 10%);
+    line-height: 1;
+    padding-top: .5rem;
+  }
+}
+
+.seasons {
+  .season {
+    padding: 2rem;
+    .season-title {
+      font-size: 2rem;
+      line-height: 1;
+      color: $white-cream;
+      text-decoration: none;
+      font-weight: 200;
+    }
+  }
+  .episode {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px outset $base-border-color;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .episode-download-status,
+    .episode-download-button,
+    .episode-searching {
+      padding: .3rem .5rem;
+      border: 1px solid black;
+      text-transform: uppercase;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      text-decoration: none;
+    }
+    .episode-searching {
+      border-color: $red;
+      color: $red;
+    }
+    .episode-download-status {
+      border-color: $green;
+      color: $green;
+    }
+    .episode-download-button {
+      border-color: $blue;
+      color: $blue;
+    }
+    .fa {
+      margin-right: 1rem;
+      color: $gray-light;
+      &.downloaded {
+        color: $green;
+      }
+    }
+    .episode-title {
+      flex: 1;
+    }
+  }  
+}
