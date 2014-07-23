@@ -1,0 +1,12 @@
+<section class="sidebar">
+  <h3>Shows</h3>
+  <ul class="shows-list">
+    {{#each show in model}}
+      <li>{{#link-to 'show' show.tvdbid}}{{show.show_name}}{{/link-to}}</li>
+    {{/each}}
+  </ul>
+</section>
+
+<section class="main-content">
+  {{outlet}}
+</section>

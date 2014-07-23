@@ -16,6 +16,9 @@ module.exports = function(app) {
   app.route('/api/shows/:tvdbid')
     .get(api.shows.show);
 
+  app.route('/api/shows/:tvdbid/poster')
+    .get(api.shows.poster);
+
   app.route('/api/shows/:tvdbid/seasons/:season/episodes/:episode')
     .get(api.episodes.show);
 

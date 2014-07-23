@@ -1,3 +1,19 @@
+html,
+body,
+.ember-application {
+  height: 100%;
+  width: 100%;
+}
+
+.ember-application {
+  > .ember-view {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+}
+
 html {
 	font-size: $base-font-size-mobile;
 	background: $application-background;
@@ -5,12 +21,13 @@ html {
 
 body {
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: $base-size;
+  font-size: $base-size;
+  font-weight: 200;
+  -webkit-font-smoothing: antialiased;
 	color: $base-font-color;
 	background: $application-background;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
-  padding-bottom: 4rem;
 }
 
 a {
@@ -26,3 +43,23 @@ a {
 .flex {
 	display: flex;
 }
+
+.sidebar {
+  overflow-y: scroll;
+  min-width: 22.5rem;
+  -webkit-overflow-scrolling: touch;
+  background: lighten($application-background, 4%);
+
+  h3 {
+    padding: 1rem 1rem 0;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+  }
+}
+
+.main-content {
+  flex: 3;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+

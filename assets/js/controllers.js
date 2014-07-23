@@ -1,5 +1,7 @@
 Dashboard.ShowIndexController = Ember.ObjectController.extend({
-
+  poster: function() {
+    return '/api/shows/' + this.get('show.tvdbid') + '/poster';
+  }.property('show.tvdbid'),
 });
 
 Dashboard.SeasonController = Ember.ObjectController.extend({
@@ -26,6 +28,12 @@ Dashboard.EpisodeController = Ember.ObjectController.extend({
 
   season_number: Ember.computed.alias('parentController.season_number'),
   tvdbid: Ember.computed.alias('controllers.show.show.tvdbid'),
+  searching: false,
+
+  statusLowercase: function() {
+    var status = this.get('status');
+    return status && status.toLowerCase();
+  }.property('status'),
 
   init: function() {
     var controller = this;
@@ -53,6 +61,7 @@ Dashboard.EpisodeController = Ember.ObjectController.extend({
     },
     download: function() {
       var controller = this;
+      controller.set('searching', true);
       Ember.$.ajax({
         url: '/api/search',
         type: 'GET',
@@ -68,6 +77,8 @@ Dashboard.EpisodeController = Ember.ObjectController.extend({
       }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR,textStatus,errorThrown);
         alert('Could not search for episode');
+      }).always(function() {
+        controller.set('searching', false);
       });
     }
   }

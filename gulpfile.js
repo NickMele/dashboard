@@ -16,21 +16,33 @@ var flatten = require('gulp-flatten');
 var handlebars = require('gulp-ember-handlebars');
 
 var paths = {
-  vendors: [
+  vendor_scripts: [
    'bower_components/jquery/dist/jquery.min.js',
    'bower_components/handlebars/handlebars.min.js',
    'bower_components/ember/ember.js',
    'bower_components/lodash/dist/lodash.min.js'
+  ],
+  vendor_styles: [
+    'bower_components/font-awesome/css/font-awesome.min.css'
+  ],
+  fonts: [
+    'bower_components/font-awesome/fonts/**/*'
   ],
   styles: ['assets/styles/main.styl'],
   scripts: ['assets/js/lib/*.js','assets/js/*.js'],
   images: ['assets/images/**/*']
 };
 
-gulp.task('vendors', function() {
-  return gulp.src(paths.vendors)
+gulp.task('vendor_scripts', function() {
+  return gulp.src(paths.vendor_scripts)
     .pipe(concat('vendors.min.js'))
     .pipe(gulp.dest('dist/assets/js'));
+});
+
+gulp.task('vendor_styles', function() {
+  return gulp.src(paths.vendor_styles)
+    .pipe(concat('vendors.min.css'))
+    .pipe(gulp.dest('dist/assets/css'));
 });
 
 gulp.task('styles', function() {
@@ -62,12 +74,18 @@ gulp.task('images', function() {
 });
 
 gulp.task('templates', function() {
-  gulp.src(['assets/templates/*/**.hbs'])
+  gulp.src(['assets/templates/**/*.hbs'])
     .pipe(handlebars({
       outputType: 'browser'
      }))
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('dist/assets/js'));
+});
+
+gulp.task('fonts', function() {
+  gulp.src(paths.fonts)
+    .pipe(gulp.dest('dist/assets/fonts'))
+    .pipe(notify({ message: 'fonts built' }));
 });
 
 gulp.task('clean', function() {
@@ -96,5 +114,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('vendors', 'styles', 'scripts', 'templates', 'images', 'server', 'watch');
+    gulp.start('vendor_scripts', 'vendor_styles', 'fonts', 'styles', 'scripts', 'templates', 'images', 'server', 'watch');
 });

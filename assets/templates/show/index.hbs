@@ -1,16 +1,30 @@
-{{show.show_name}}
+<div class="show-details">
+  <div class="show-poster">
+    <img {{bind-attr src=poster}}>
+  </div>
+  <div class="show-info">
+    <h1 class="show-name">{{show.show_name}}</h1>
+    {{#if show.airs}}
+      <div class="show-airtime">{{show.airs}}</div>
+    {{/if}}
+  </div>
+</div>
 
-<ul>
+<ul class="seasons">
   {{#each season in model.seasons itemController="season"}}
-    <li {{bind-attr class="season.open"}}>
-      <a href="#" {{action 'toggle'}}>{{season.title}}</a>
-      <ul>
+    <li {{bind-attr class=":season season.open"}}>
+      <a href="#" class="season-title" {{action 'toggle'}}>{{season.title}}</a>
+      <ul class="episodes">
         {{#each episode in season.episodes itemController="episode"}}
-          <li>
-            {{episode.name}} ({{episode.status}})
-            <a href="#" {{action 'download'}}>Download</a>
+          <li class="episode">
+          <div {{bind-attr class=":fa :fa-arrow-circle-o-down episode.statusLowercase"}} {{action 'download'}}></div>
+            <div class="episode-title">{{episode.name}}</div>
             {{#each episode.download_status}}
-              <div>Downloading: {{percentage}}%</div>
+              <div class="episode-download-status">Downloading: {{percentage}}%</div>
+            {{else}}
+              {{#if episode.searching}}
+                <div class="episode-searching">Searching</div>
+              {{/if}}
             {{/each}}
           </li>
         {{/each}}

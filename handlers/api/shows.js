@@ -62,6 +62,13 @@ module.exports = function(app) {
       async.waterfall(steps, function(error, data) {
         return res.send(data);
       });
+    },
+
+    poster: function(req, res) {
+      // get our request object for the poster
+      var poster = sickbeard.get('show.getposter', { tvdbid: req.params.tvdbid });
+      // stream the request to the response
+      req.pipe(poster).pipe(res);
     }
 
   };
