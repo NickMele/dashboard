@@ -35,7 +35,7 @@ function getDownloadStatus(req, res) {
       var download_status = _.map(data.history, function(item) {
         return _.find(tv_downloads, { filename: item.resource });
       });
-      data.episode.download_status = _.compact(download_status);
+      data.episode.download_status = _.chain(download_status).compact().uniq('filename').value();
       return next(null, data);
     });
   };

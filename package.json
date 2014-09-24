@@ -19,6 +19,10 @@
   "dependencies": {
     "express": "^4.4.3",
     "hbs": "^2.7.0",
+    "nib": "^1.0.3",
+    "morgan": "^1.1.1",
+    "body-parser": "^1.8.1",
+    "errorhandler": "^1.2.0",
     "request": "^2.36.0",
     "nconf": "^0.6.9",
     "lodash": "^2.4.1",
@@ -36,9 +40,6 @@
     "gulp-jshint": "^1.6.3",
     "gulp-imagemin": "^0.6.1",
     "gulp-flatten": "0.0.2",
-    "nib": "^1.0.3",
-    "express-namespace": "^0.1.1",
-    "morgan": "^1.1.1",
     "gulp-ember-handlebars": "^0.6.0"
   },
   "devDependencies": {
