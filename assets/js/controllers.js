@@ -1,7 +1,11 @@
-Dashboard.ShowIndexController = Ember.ObjectController.extend({
+Dashboard.ShowController = Ember.ObjectController.extend({
   poster: function() {
-    return '/api/shows/' + this.get('show.tvdbid') + '/poster';
-  }.property('show.tvdbid'),
+    return '/api/shows/' + this.get('tvdbid') + '/poster';
+  }.property('tvdbid'),
+
+  banner: function() {
+    return '/api/shows/' + this.get('tvdbid') + '/banner';
+  }.property('tvdbid'),
 });
 
 Dashboard.SeasonController = Ember.ObjectController.extend({
@@ -24,10 +28,10 @@ Dashboard.SeasonController = Ember.ObjectController.extend({
 });
 
 Dashboard.EpisodeController = Ember.ObjectController.extend({
-  needs: 'show',
+  needs: ['show', 'seasons'],
 
   season_number: Ember.computed.alias('parentController.season_number'),
-  tvdbid: Ember.computed.alias('controllers.show.show.tvdbid'),
+  tvdbid: Ember.computed.alias('controllers.show.tvdbid'),
   searching: false,
 
   statusLowercase: function() {

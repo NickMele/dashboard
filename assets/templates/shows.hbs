@@ -1,12 +1,15 @@
-<section class="sidebar">
-  <h3>Shows</h3>
-  <ul class="shows-list">
-    {{#each show in model}}
-      <li>{{#link-to 'show' show.tvdbid}}{{show.show_name}}{{/link-to}}</li>
-    {{/each}}
-  </ul>
-</section>
-
-<section class="main-content">
-  {{outlet}}
-</section>
+<ul class="shows-list">
+  {{#each show in model itemController="show"}}
+    <li>
+      {{#link-to 'show' show.tvdbid }}
+        <div class="show-info">
+          <h5 class="show-name">{{show.show_name}}</h5>
+          <span class="show-network">{{show.network}}</span>
+        </div>
+        <div class="responsive-image-container show-poster">
+          <img {{bind-attr src=show.poster}}>
+        </div>
+      {{/link-to}}
+    </li>
+  {{/each}}
+</ul>

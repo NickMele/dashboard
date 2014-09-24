@@ -1,0 +1,16 @@
+<div class="show">
+  <div class="responsive-image-container show-banner">
+    <img {{bind-attr src=banner}}>
+  </div>
+  <div class="show-info">
+    <h1 class="show-name">{{show_name}}</h1>
+    {{#if airs}}
+      <div class="show-airtime">Airs on {{airs}}</div>
+    {{/if}}
+  </div>
+</div>
+
+{{#link-to 'show.index'}}Info{{/link-to}}
+{{#link-to 'show.seasons'}}Seasons{{/link-to}}
+
+{{outlet}}

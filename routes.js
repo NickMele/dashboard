@@ -23,6 +23,10 @@ module.exports = function(app) {
   app.route('/api/shows/:tvdbid/poster')
     .get(api.shows.poster);
 
+  // get the banner for a show
+  app.route('/api/shows/:tvdbid/banner')
+    .get(api.shows.banner);
+
   // list the seasons for a show
   app.route('/api/shows/:tvdbid/seasons')
     .get(api.seasons.index);

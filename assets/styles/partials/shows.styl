@@ -1,15 +1,41 @@
 .shows-list {
   margin: 1rem 0;
   a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: .75rem 1rem;
     color: $white-cream;
     text-decoration: none;
     font-weight: 200;
-    font-size: 1.2rem;
+    border-bottom: 1px solid $gray;
     &.active {
       background: #2e2f33;
       border-right: .5rem solid $blue;
+    }
+    .show-poster {
+      flex: 0;
+      max-width: 50px;
+      min-width: 50px;
+      max-height: 50px;
+      min-height: 50px;
+      position: relative;
+      border: 1px solid transparent;
+      overflow: hidden;
+      border-radius: 100%;
+    }
+    .show-info {
+      flex: 1;
+      display: block;
+      padding-right: 1rem;
+      .show-name {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        padding-bottom: .3rem;
+      }
+      .show-network {
+        font-size: 1rem;
+        color: $gray-light;
+      }
     }
   }
 }

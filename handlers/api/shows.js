@@ -42,6 +42,14 @@ module.exports = function(app) {
       var poster = sickbeard.get('show.getposter', { tvdbid: req.params.tvdbid });
       // stream the request to the response
       req.pipe(poster).pipe(res);
+    },
+
+    // show the banner for a show
+    banner: function(req, res, next) {
+      // get our request object for the banner
+      var banner = sickbeard.get('show.getbanner', { tvdbid: req.params.tvdbid });
+      // stream the request to the response
+      req.pipe(banner).pipe(res);
     }
 
   };

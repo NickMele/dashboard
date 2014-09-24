@@ -11,8 +11,16 @@ module.exports = function(app) {
       data.params = {
         tvdbid : parseInt(req.params.tvdbid, 10)
       };
-      sickbeard.get('show.seasonlist', data.params, function(error, response, json) {
-        data.seasons = json.data;
+      sickbeard.get('show.seasons', data.params, function(error, response, json) {
+        data.seasons = _.map(json.data, function(season, key) {
+          return {
+            season_number: key && parseInt(key, 10),
+            episodes: _.map(season, function(episode, index) {
+              episode.episode_number = index && parseInt(index, 10);
+              return episode;
+            })
+          };
+        }).reverse();
         return res.send(data);
       });
     },

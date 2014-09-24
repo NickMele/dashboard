@@ -1,7 +1,7 @@
 Dashboard.Router.map(function() {
-  this.resource('shows', {path: '/'}, function() {
-    this.resource('show', {path: '/show/:tvdbid'}, function() {
-    });
+  this.route('shows', {path: '/shows'});
+  this.resource('show', {path: '/shows/:tvdbid'}, function() {
+    this.route('seasons');
   });
 });
 
@@ -22,16 +22,20 @@ Dashboard.ShowsRoute = Ember.Route.extend({
 Dashboard.ShowRoute = Ember.Route.extend({
   model: function(params) {
     var tvdbid = params.tvdbid && parseInt(params.tvdbid, 10);
-    var show = this.modelFor('shows').findBy('tvdbid', tvdbid);
-    var seasons = Ember.A();
     return Ember.$.getJSON('/api/shows/' + tvdbid).then(function(data) {
-      data.seasons.forEach(function(season) {
-        seasons.pushObject(Dashboard.Season.create(season));
+      return Dashboard.Show.create(data.show);
+    });
+  }
+});
+
+Dashboard.ShowSeasonsRoute = Ember.Route.extend({
+  model: function(params, transition) {
+    var show = this.modelFor('show');
+    var tvdbid = show.get('tvdbid');
+    return Ember.$.getJSON('/api/shows/' + tvdbid + '/seasons').then(function(data) {
+      return data.seasons.map(function(season) {
+        return Dashboard.Season.create(season);
       });
-      return {
-        show: Dashboard.Show.create(data.show),
-        seasons: seasons
-      };
     });
   }
 });
