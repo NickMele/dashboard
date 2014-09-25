@@ -1,15 +1,17 @@
 Dashboard.ShowController = Ember.ObjectController.extend({
+  currentSeason: null,
+
   poster: function() {
     return '/api/shows/' + this.get('tvdbid') + '/poster';
   }.property('tvdbid'),
 
   banner: function() {
     return '/api/shows/' + this.get('tvdbid') + '/banner';
-  }.property('tvdbid'),
+  }.property('tvdbid')
+
 });
 
-Dashboard.SeasonController = Ember.ObjectController.extend({
-  open: false,
+Dashboard.SeasonsSeasonController = Ember.ObjectController.extend({
 
   title: function() {
     var season_number = this.get('season_number');
@@ -18,13 +20,8 @@ Dashboard.SeasonController = Ember.ObjectController.extend({
     } else {
       return "Season " + season_number;
     }
-  }.property('season_number'),
+  }.property('season_number')
 
-  actions: {
-    toggle: function() {
-      this.set('open', !this.get('open'));
-    }
-  }
 });
 
 Dashboard.EpisodeController = Ember.ObjectController.extend({

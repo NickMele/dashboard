@@ -1,0 +1,72 @@
+.seasons-navigation-wrapper {
+  margin-top: 1rem;
+  max-width: 100%;
+  overflow: hidden;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  white-space: nowrap;
+  background: $gray;
+  .seasons-navigation {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    &::-webkit-scrollbar { 
+      display: none; 
+    }
+    ul {
+      width: 100%;
+      list-style: none;
+      display: initial;
+      li {
+        vertical-align: middle;
+        display: inline-block;
+        transform: translateZ(0);
+        a {
+          padding: 1.5rem 1rem;
+          display: block;
+          color: $gray-light;
+          text-decoration: none;
+          &.active {
+            background: darken($gray, 20%);
+            color: $white-cream;
+          }
+        }
+      }
+    }
+  }
+}
+
+.season {
+  padding: 1rem;
+  .season-title {
+    font-size: 2rem;
+    line-height: 1;
+    color: $white-cream;
+    text-decoration: none;
+    font-weight: 200;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+.episode {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px outset $base-border-color;
+  &:last-of-type {
+    border-bottom: none;
+  }
+  .fa {
+    color: $gray-light;
+    font-size: 2rem;
+    &.downloaded {
+      color: $green;
+    }
+  }
+  .episode-title {
+    flex: 1;
+    font-size: 1rem;
+    padding-right: 1.1rem;
+  }
+}  

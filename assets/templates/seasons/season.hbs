@@ -1,0 +1,10 @@
+<section class="season">
+  <ul class="episodes">
+    {{#each episode in episodes itemController="episode"}}
+      <li class="episode">
+        <div class="episode-title">{{episode.name}}</div>
+        <div {{bind-attr class=":fa :fa-arrow-circle-o-down episode.statusLowercase"}} {{action 'download'}}></div>
+      </li>
+    {{/each}}
+  </ul>
+</section>

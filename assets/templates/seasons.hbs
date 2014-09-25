@@ -1,0 +1,13 @@
+<nav class="seasons-navigation-wrapper">
+  <div class="seasons-navigation">
+    <ul>
+    {{#each season in model itemController="seasons.season"}}
+      <li>
+        {{#link-to 'seasons.season' season.season_number}}{{season.title}}{{/link-to}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</nav>
+
+{{outlet}}

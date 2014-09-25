@@ -1,0 +1,9 @@
+<div class="show-info">
+  <h1 class="show-name">{{show_name}}</h1>
+  {{#if airs}}
+    <div class="show-airtime">Airs on {{airs}}</div>
+  {{/if}}
+</div>
+
+{{#link-to 'seasons'}}{{season_list.length}} Seasons{{/link-to}}
+

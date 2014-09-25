@@ -4,9 +4,6 @@ module.exports = function(app) {
   var dashboard = require('./handlers/dashboard')(app);
   var api = require('./handlers/api/index')(app);
 
-  // setup routes
-  app.get('/', dashboard.index);
-
   // search for an episode
   app.route('/api/search')
     .get(api.search.episode);
@@ -42,4 +39,7 @@ module.exports = function(app) {
   // show all downloads in sab
   app.route('/api/downloads/queue')
     .get(api.downloads.queue);
+
+  // ember will handle all other routes
+  app.get('*', dashboard.index);
 };

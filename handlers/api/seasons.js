@@ -33,11 +33,14 @@ module.exports = function(app) {
         season : parseInt(req.params.season, 10)
       };
       sickbeard.get('show.seasons', data.params, function(error, response, json) {
-        data.episodes = _.map(json.data, function(episode, index) {
-          episode.episode_number = index && parseInt(index, 10);
-          episode.airdate = new Date(episode.airdate);
-          return episode;
-        });
+        data.season = {
+          season_number: data.params.season,
+          episodes: _.map(json.data, function(episode, index) {
+            episode.episode_number = index && parseInt(index, 10);
+            episode.airdate = new Date(episode.airdate);
+            return episode;
+          })
+        }
         return res.send(data);
       });
     }
